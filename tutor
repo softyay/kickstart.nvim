@@ -1,0 +1,6 @@
+Intro screen command:
+e: $MYVIMRC
+
+:wq to save and quit
+:q! to delete and quit
+:qa to something else...
