@@ -2,6 +2,14 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
+--
+
+local PRIORITY = 999
+local TRANSPARENT_BKG = false
+local KANAGAWA_DARK_BLUE = '#16161D'
+local KANAGAWA_SIDEBAR = '#27272e'
+local KANAGAWA_SIDEBAR_SLIGHT = '#191920'
+
 return {
   -- the colorscheme should be available when starting Neovim
   -- {
@@ -15,17 +23,96 @@ return {
   -- },
   {
     'rebelot/kanagawa.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
+    priority = PRIORITY, -- Make sure to load this before all the other start plugins.
     config = function()
-      require('kanagawa.nvim').setup {
-        transparent = true,
-        styles = {
-          sidebars = 'transparent',
-          floats = 'transparent',
-          comments = { italic = false }, -- Disable italics in comments
+      require('kanagawa').setup {
+        undercurl = true,
+        commentStyle = { italic = true },
+        functionStyle = {},
+        keywordStyle = { italic = true },
+        statementStyle = { bold = true },
+        typeStyle = {},
+        transparent = TRANSPARENT_BKG,
+        dimInactive = false,
+        terminalColors = true,
+      }
+      vim.cmd [[colorscheme kanagawa]]
+      vim.cmd('hi Normal guibg=' .. KANAGAWA_DARK_BLUE)
+      vim.cmd('hi LineNr guibg=' .. KANAGAWA_SIDEBAR_SLIGHT)
+      vim.cmd('hi SignColumn guibg=' .. KANAGAWA_SIDEBAR_SLIGHT)
+    end,
+  },
+  {
+    'echasnovski/mini.files',
+    config = function()
+      local minifiles = require 'mini.files'
+      minifiles.setup {
+        -- Customization of shown content
+        content = {
+          -- Predicate for which file system entries to show
+          filter = nil,
+          -- What prefix to show to the left of file system entry
+          prefix = nil,
+          -- In which order to show file system entries
+          sort = nil,
+        },
+
+        -- Module mappings created only inside explorer.
+        -- Use `''` (empty string) to not create one.
+        mappings = {
+          close = 'q',
+          go_in = 'l',
+          go_in_plus = 'L',
+          go_out = 'h',
+          go_out_plus = 'H',
+          mark_goto = "'",
+          mark_set = 'm',
+          reset = '<BS>',
+          reveal_cwd = '@',
+          show_help = 'g?',
+          synchronize = '=',
+          trim_left = '<',
+          trim_right = '>',
+        },
+
+        -- General options
+        options = {
+          -- Whether to delete permanently or move into module-specific trash
+          permanent_delete = true,
+          -- Whether to use for editing directories
+          use_as_default_explorer = true,
+        },
+
+        -- Customization of explorer windows
+        windows = {
+          -- Maximum number of windows to show side by side
+          max_number = 3,
+          -- Whether to show preview of file/directory under cursor
+          preview = true,
+          -- Width of focused window
+          width_focus = 25,
+          -- Width of non-focused window
+          width_nofocus = 25,
+          -- Width of preview window
+          width_preview = 70,
         },
       }
-      vim.cmd.colorscheme 'kanagawa'
+      vim.keymap.set('n', '<leader>ec', function()
+        minifiles.open(nil, false)
+      end, { desc = 'File [e]xplore ([c]urrent dir)' })
+      vim.keymap.set('n', '<leader>er', function()
+        minifiles.open()
+      end, { desc = 'File [e]xplore ([r]esume)' })
+      vim.keymap.set('n', '<leader>ef', function()
+        minifiles.open(vim.fn.getreg '%', false)
+      end, { desc = 'File [e]xplore (this [f]ile)' })
+
+      -- TODO: Make a keymap to find the current directory under the cursor
+      -- possibly check for a git repo first.
+      --
+      -- vim.keymap.set('n', '<leader>es', function()
+      --   minifiles.open(vim.fn.chdir(vim.fn.getreg '%'), false)
+      -- end, { desc = '[S]et this as current dir' })
     end,
   },
 

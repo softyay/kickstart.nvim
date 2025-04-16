@@ -215,9 +215,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- NOTE: Layla added
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
   pattern = '*',
   command = 'checktime',
+})
+
+-- NOTE: Post-ColorScheme asssignment, ensure that gitsigns highlights are
+-- consistent with whatever colorscheme is set.
+vim.api.nvim_create_autocmd('ColorScheme', {
+  pattern = '*',
+  callback = function()
+    vim.cmd 'hi GitSignsAdd guibg=NONE'
+    vim.cmd 'hi GitSignsChange guibg=NONE'
+    vim.cmd 'hi GitSignsDelete guibg=NONE'
+  end,
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
@@ -256,31 +268,98 @@ require('lazy').setup({
 
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
-  --    {
-  --        'lewis6991/gitsigns.nvim',
-  --        config = function()
-  --            require('gitsigns').setup({
-  --                -- Your gitsigns configuration here
-  --            })
-  --        end,
-  --    }
-  --
-  -- Here is a more advanced example where we pass configuration
-  -- options to `gitsigns.nvim`.
-  --
-  -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
+  {
     'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
+    config = function()
+      local gitsigns = require 'gitsigns'
+
+      local signs = {
         add = { text = '+' },
         change = { text = '~' },
         delete = { text = '_' },
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
-      },
-    },
+      }
+
+      local on_attach = function(bufnr)
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
+
+        --[[ NOTE: Layla added. Remove a hyphen from the line below
+        (before the brackets) to comment out my changes ]]
+        ---[[
+        -- Nav Hunks
+        local nav_hunk_opts = {
+          preview = true,
+          greedy = true,
+        }
+
+        local function nav_delegate(direction)
+          return function()
+            gitsigns.nav_hunk(direction, nav_hunk_opts)
+          end
+        end
+
+        map('n', '<leader>hj', nav_delegate 'next', { desc = 'Jump to next unstaged hunk' })
+        map('n', '<leader>hJ', nav_delegate 'last', { desc = 'Jump to last unstaged hunk' })
+        map('n', '<leader>hk', nav_delegate 'prev', { desc = 'Jump to prev unstaged hunk' })
+        map('n', '<leader>hK', nav_delegate 'first', { desc = 'Jump to first unstaged hunk' })
+
+        -- Highlighting
+        map('n', '<leader>hn', gitsigns.toggle_numhl, { desc = 'Toggle Highlight Diff [N]umbers' })
+        map('n', '<leader>hl', gitsigns.toggle_linehl, { desc = 'Toggle Highlight Diff [L]ines' })
+        --]]
+
+        -- Actions
+        -- visual mode
+        map('v', '<leader>hs', function()
+          gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
+        end, { desc = 'git [s]tage hunk' })
+        map('v', '<leader>hr', function()
+          gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
+        end, { desc = 'git [r]eset hunk' })
+
+        -- normal mode
+        map('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'git [s]tage hunk' })
+        map('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'git [r]eset hunk' })
+        map('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'git [S]tage buffer' })
+        map('n', '<leader>hu', gitsigns.stage_hunk, { desc = 'git [u]ndo stage hunk' })
+        map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
+        map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
+        map('n', '<leader>hb', gitsigns.blame_line, { desc = 'git [b]lame line' })
+        map('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
+        map('n', '<leader>hD', function()
+          gitsigns.diffthis '@'
+        end, { desc = 'git [D]iff against last commit' })
+
+        -- Toggles
+        map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
+        map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = '[T]oggle git show [D]eleted' })
+      end
+
+      gitsigns.setup {
+        signs = signs,
+        on_attach = on_attach,
+      }
+    end,
   },
+  --
+  -- Here is a more advanced example where we pass configuration
+  -- options to `gitsigns.nvim`.
+  -- See `:help gitsigns` to understand what the configuration keys do
+  --
+  --  WARNING:
+  --  Not really an example of ^^ anymore.
+  --  a lot of this got copied to the full config above,
+  --  and got lost in the fray 😅
+  --
+  --{ -- Adds git related signs to the gutter, as well as utilities for managing changes
+  --  'lewis6991/gitsigns.nvim',
+  --},
+  --},
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -467,7 +546,7 @@ require('lazy').setup({
     end,
   },
 
-  -- Plugins Added by meeee
+  -- NOTE: Layla added
   {
     'chentoast/marks.nvim',
     event = 'VeryLazy',
@@ -922,23 +1001,23 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      require('tokyonight').setup {
-        transparent = true,
-        styles = {
-          sidebars = 'transparent',
-          floats = 'transparent',
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
-    end,
+    -- 'folke/tokyonight.nvim',
+    -- priority = 1000, -- Make sure to load this before all the other start plugins.
+    -- config = function()
+    --   require('tokyonight').setup {
+    --     transparent = true,
+    --     styles = {
+    --       sidebars = 'transparent',
+    --       floats = 'transparent',
+    --       comments = { italic = false }, -- Disable italics in comments
+    --     },
+    --   }
+    --
+    --   -- Load the colorscheme here.
+    --   -- Like many other themes, this one has different styles, and you could load
+    --   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+    --   vim.cmd.colorscheme 'tokyonight-night'
+    -- end,
   },
 
   -- Highlight todo, notes, etc in comments
@@ -962,8 +1041,8 @@ require('lazy').setup({
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
-      -- Added by Layla
-      require('mini.files').setup()
+      -- -- Added by Layla
+      -- require('custom.plugins')
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
@@ -1030,7 +1109,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
