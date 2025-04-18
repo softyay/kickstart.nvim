@@ -155,7 +155,7 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 10
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -613,6 +613,22 @@ require('lazy').setup({
       --    That is to say, every time a new file is opened that is associated with
       --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
       --    function will be executed to configure the current buffer
+
+      -- NOTE: Layla added
+      ---[[
+      local orig_hover = vim.lsp.buf.hover
+      vim.lsp.buf.hover = function(config)
+        config = config or {}
+        config.border = config.border or 'rounded'
+        return orig_hover(config)
+      end
+      vim.api.nvim_create_autocmd('ColorScheme', {
+        callback = function()
+          vim.api.nvim_set_hl(0, 'LspReferenceTarget', {})
+        end,
+      })
+      --]]
+
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
@@ -722,6 +738,7 @@ require('lazy').setup({
       vim.diagnostic.config {
         severity_sort = true,
         float = { border = 'rounded', source = 'if_many' },
+        hover = { border = 'rounded', source = 'if_many' },
         underline = { severity = vim.diagnostic.severity.ERROR },
         signs = vim.g.have_nerd_font and {
           text = {
@@ -731,7 +748,11 @@ require('lazy').setup({
             [vim.diagnostic.severity.HINT] = '󰌶 ',
           },
         } or {},
+        -- NOTE: Layla mod
         virtual_text = {
+          --[[ false
+        },--]]
+          ---[[
           source = 'if_many',
           spacing = 2,
           format = function(diagnostic)
@@ -743,7 +764,7 @@ require('lazy').setup({
             }
             return diagnostic_message[diagnostic.severity]
           end,
-        },
+        }, --]]
       }
 
       -- LSP servers and clients are able to communicate to each other what features they support.
@@ -793,10 +814,10 @@ require('lazy').setup({
 
         omnisharp = {
           -- Optional: Customize the command to start OmniSharp
-          cmd = { 'omnisharp' }, -- Ensure this points to your installed OmniSharp binary.
-          filetypes = { 'cs' }, -- Specify C# filetypes.
-          root_dir = require('lspconfig.util').root_pattern('.sln', '.git'), -- Define how to detect the project root.
-          capabilities = capabilities, -- Pass shared capabilities defined earlier.
+          -- cmd = { 'omnisharp' }, -- Ensure this points to your installed OmniSharp binary.
+          -- filetypes = { 'cs' }, -- Specify C# filetypes.
+          -- root_dir = require('lspconfig.util').root_pattern('.sln', '.git'), -- Define how to detect the project root.
+          -- capabilities = capabilities, -- Pass shared capabilities defined earlier.
         },
       }
 
@@ -921,6 +942,14 @@ require('lazy').setup({
       luasnip.config.setup {}
 
       cmp.setup {
+        -- NOTE: Layla added
+        ---[[
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+          snippet = cmp.config.window.bordered(),
+          hover = cmp.config.window.bordered(),
+        }, --]]
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -1103,6 +1132,8 @@ require('lazy').setup({
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
+  -- WARN: Most of what is in the module below has been reconfigured
+  -- and moved to custom.plugins
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
