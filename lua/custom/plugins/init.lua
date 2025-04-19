@@ -44,50 +44,48 @@ return {
           theme = {
             wave = {
               ui = {
-                -- normal text
+                -- NOTE: EDITOR BACKGROUND
+                bg = df.sumiInk0,
+                -- CURRENT LINE HIGHLIGHT
+                bg_p2 = df.sumiInk4,
+
+                -- VISUAL HIGHLIGHT
+                bg_visual = df.winterRed,
+
+                -- DEFAULT TEXT
                 fg = df.fujiWhite,
 
-                -- status bar text
-                fg_dim = df.dragonAsh,
+                -- normal mode status bar TEXT
+                -- & status bar background (NOT FOCUSED)??
+                bg_m3 = df.dragonBlack4,
 
-                -- Search text
+                -- STATUS BAR TEXT (FOCUSED)
+                fg_dim = df.dragonAsh,
+                -- STATUS BAR CENTER (FOCUSED)
+                bg_dim = df.dragonBlack0,
+                -- STATUS BAR SIDES (FOCUSED)
+                bg_p1 = df.dragonBlack2,
+
+                -- SEARCH TEXT
                 fg_reverse = df.dragonBlack0,
-                -- Search background
+                -- SEARCH BACKGROUND
                 bg_search = df.waveBlue1,
 
-                -- status bar file bg
-                bg_dim = df.dragonBlack0,
-
-                -- side bg
+                -- SIDE TEXT
+                nontext = df.sumiInk6,
+                -- SIDE BACKGROUND
                 bg_gutter = df.sumiInk2,
-
-                -- normal mode text status bar & background between buffer windows??
-                bg_m3 = df.dragonBlack4,
 
                 -- ?
                 bg_m2 = 'cyan',
-
-                -- idk
+                -- ?
                 bg_m1 = 'magenta',
-
-                -- NOTE: actual editor background
-                bg = df.sumiInk0,
-
-                -- statusbar right and left bg
-                bg_p1 = df.dragonBlack2,
-
-                -- current line highlight bg
-                bg_p2 = df.sumiInk4,
 
                 special = df.springViolet1,
 
-                -- side nums
-                nontext = df.sumiInk6,
-
                 whitespace = df.sumiInk6,
 
-                bg_visual = df.winterRed,
-
+                -- Auto Complete
                 pmenu = {
                   fg = df.fujiWhite,
                   fg_sel = 'none', -- This is important to make highlights pass-through
@@ -97,11 +95,12 @@ return {
                   bg_thumb = df.waveBlue2,
                 },
 
+                -- Popup Windows (i.e. MiniFiles)
                 float = {
                   fg = df.oldWhite,
                   bg = df.sumiInk0,
                   fg_border = df.sumiInk6,
-                  bg_border = df.sumiInk1,
+                  bg_border = df.sumiInk0,
                 },
               },
             },

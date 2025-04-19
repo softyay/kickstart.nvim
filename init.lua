@@ -136,7 +136,7 @@ vim.opt.signcolumn = 'yes'
 vim.opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
-vim.opt.timeoutlen = 300
+-- vim.opt.timeoutlen = 300
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
@@ -180,11 +180,24 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+-- NOTE: Layla added
+-- Commands for window sizing that don't use <C-W>, which
+-- conflicts with Windows Terminal hotkeys
+---[[
+local bumpWinSize = function(axis, amt)
+  local operation = (amt >= 0) and '+' or '-'
+  amt = (amt >= 0) and amt or -amt
+  if axis == 'h' then
+    return '<cmd>vert res ' .. operation .. amt .. '<CR>'
+  else
+    return '<cmd>res ' .. operation .. amt .. '<CR>'
+  end
+end
+vim.keymap.set('n', '<left>', bumpWinSize('h', -5))
+vim.keymap.set('n', '<right>', bumpWinSize('h', 5))
+vim.keymap.set('n', '<up>', bumpWinSize('v', 5))
+vim.keymap.set('n', '<down>', bumpWinSize('v', -5))
+--]]
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -379,6 +392,7 @@ require('lazy').setup({
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
+      preset = 'helix',
       -- delay between pressing a key and opening which-key (milliseconds)
       -- this setting is independent of vim.opt.timeoutlen
       delay = 0,
@@ -490,11 +504,21 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
+        -- NOTE: Layla Added
+        --
+        ---[[
+        defaults = {
+          path_display = {
+            truncate = true,
+          },
+          mappings = {
+            i = {
+              ['<PageUp>'] = 'preview_scrolling_up',
+              ['<PageDown>'] = 'preview_scrolling_down',
+              --     i = { ['<c-enter>'] = 'to_fuzzy_refine',
+            },
+          },
+        }, --]]
         -- pickers = {}
         extensions = {
           ['ui-select'] = {
@@ -511,10 +535,10 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>sfd', builtin.find_files, { desc = '[S]earch [F]iles [D]ANGEROUSLY' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-      vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+      vim.keymap.set('n', '<leader>swd', builtin.grep_string, { desc = '[S]earch current [W]ord [D]ANGEROUSLY' })
+      vim.keymap.set('n', '<leader>sgd', builtin.live_grep, { desc = '[S]earch [G]rep [D]ANGEROUSLY' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
@@ -537,12 +561,12 @@ require('lazy').setup({
           prompt_title = 'Live Grep in Open Files',
           layout_strategy = 'vertical',
         }
-      end, { desc = '[S]earch [/] in Open Files' })
+      end, { desc = 'Grep [S]earch [/] in Open Files' })
 
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
-      end, { desc = '[S]earch [N]eovim files' })
+      end, { desc = '[S]earch for [N]eovim files' })
     end,
   },
 
@@ -749,10 +773,9 @@ require('lazy').setup({
           },
         } or {},
         -- NOTE: Layla mod
+        --false,
+        ---[[
         virtual_text = {
-          --[[ false
-        },--]]
-          ---[[
           source = 'if_many',
           spacing = 2,
           format = function(diagnostic)
@@ -815,9 +838,9 @@ require('lazy').setup({
         omnisharp = {
           -- Optional: Customize the command to start OmniSharp
           -- cmd = { 'omnisharp' }, -- Ensure this points to your installed OmniSharp binary.
-          -- filetypes = { 'cs' }, -- Specify C# filetypes.
-          -- root_dir = require('lspconfig.util').root_pattern('.sln', '.git'), -- Define how to detect the project root.
-          -- capabilities = capabilities, -- Pass shared capabilities defined earlier.
+          filetypes = { 'cs' }, -- Specify C# filetypes.
+          root_dir = require('lspconfig.util').root_pattern('.sln', '.git'), -- Define how to detect the project root.
+          capabilities = capabilities, -- Pass shared capabilities defined earlier.
         },
       }
 
