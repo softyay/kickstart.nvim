@@ -343,14 +343,14 @@ require('lazy').setup({
         map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
         map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
         map('n', '<leader>hb', gitsigns.blame_line, { desc = 'git [b]lame line' })
-        map('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
+        --[[map('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
         map('n', '<leader>hD', function()
           gitsigns.diffthis '@'
         end, { desc = 'git [D]iff against last commit' })
 
         -- Toggles
         map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
-        map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = '[T]oggle git show [D]eleted' })
+        map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = '[T]oggle git show [D]eleted' })--]]
       end
 
       gitsigns.setup {
@@ -437,6 +437,7 @@ require('lazy').setup({
       spec = {
         { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
+        { '<leader>e', group = '[E]xplore' }, -- NOTE: Layla added
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
@@ -509,7 +510,7 @@ require('lazy').setup({
         ---[[
         defaults = {
           path_display = {
-            truncate = true,
+            truncate = 3,
           },
           mappings = {
             i = {
@@ -1093,9 +1094,9 @@ require('lazy').setup({
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
-      -- -- Added by Layla
-      -- require('custom.plugins')
-
+      -- NOTE: Disable ministatusline below.
+      --
+      --[[
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
@@ -1105,7 +1106,7 @@ require('lazy').setup({
 
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_filename = function()
-        local fullpath = vim.fn.expand '%:p'
+        local fullpath = vim.fn.expand '%:f'
         local backslashCount = 0
         local charsToRemove = 0
 
@@ -1120,7 +1121,8 @@ require('lazy').setup({
           end
         end
 
-        return fullpath:sub(charsToRemove, #fullpath)
+        local prepend = charsToRemove > 0 and '~~' or ''
+        return prepend .. fullpath:sub(charsToRemove, #fullpath) .. ' %r %m'
       end
 
       -- You can configure sections in the statusline by overriding their
@@ -1130,6 +1132,7 @@ require('lazy').setup({
       statusline.section_location = function()
         return '%2l:%-2v'
       end
+      --]]
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
