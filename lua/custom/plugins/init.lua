@@ -6,6 +6,8 @@
 
 local softKanagawa = require 'custom.plugins.softKanagawa'
 local softMiniFile = require 'custom.plugins.softMiniFile'
+local softLuaLine = require 'custom.plugins.softLualine'
+local softTabby = require 'custom.plugins.softTabby'
 return {
   -- the colorscheme should be available when starting Neovim
   --[[
@@ -21,6 +23,8 @@ return {
   --]]
   { softKanagawa },
   { softMiniFile },
+  { softLuaLine },
+  { softTabby },
 
   -- NOTE: Commenting all of this out for sanity, but it is copied
   -- directly from `:help lazy.nvim-🔌-plugin-spec`

@@ -55,15 +55,18 @@ return {
         width_preview = 70,
       },
     }
+
     vim.keymap.set('n', '<leader>ec', function()
       minifiles.open(nil, false)
-    end, { desc = 'File [e]xplore ([c]urrent dir)' })
+    end, { desc = '[E]xplore [C]urrent Directory)' })
+
     vim.keymap.set('n', '<leader>er', function()
       minifiles.open()
-    end, { desc = 'File [e]xplore ([r]esume)' })
+    end, { desc = '[E]xplore ([R]esume)' })
+
     vim.keymap.set('n', '<leader>ef', function()
       minifiles.open(vim.fn.getreg '%', false)
-    end, { desc = 'File [e]xplore (this [f]ile)' })
+    end, { desc = '[E]xplore from [F]ile' })
 
     -- TODO: Make a keymap to find the current directory under the cursor
     -- possibly check for a git repo first.

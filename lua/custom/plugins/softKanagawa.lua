@@ -36,14 +36,17 @@ return {
 
               -- normal mode status bar TEXT
               -- & status bar background (NOT FOCUSED)??
-              bg_m3 = df.dragonBlack4,
+              bg_m3 = df.dragonBlack2,
 
-              -- STATUS BAR TEXT (FOCUSED)
-              fg_dim = df.dragonAsh,
-              -- STATUS BAR CENTER (FOCUSED)
-              bg_dim = df.dragonBlack0,
-              -- STATUS BAR SIDES (FOCUSED)
-              bg_p1 = df.dragonBlack2,
+              special = df.dragonBlack5,
+
+              -- ??
+              bg_dim = yellow,
+
+              -- STATUS BAR FILE TEXT (FOCUSED)
+              fg_dim = df.oldWhite,
+              -- STATUS BAR FILE BKG (FOCUS)
+              bg_p1 = df.dragonAsh,
 
               -- SEARCH TEXT
               fg_reverse = df.dragonBlack0,
@@ -53,14 +56,13 @@ return {
               -- SIDE TEXT
               nontext = df.sumiInk6,
               -- SIDE BACKGROUND
+              -- && NORMAL MODE STATUS BKG
               bg_gutter = df.sumiInk2,
 
               -- ?
               bg_m2 = 'cyan',
               -- ?
               bg_m1 = 'magenta',
-
-              special = df.springViolet1,
 
               whitespace = df.sumiInk6,
 
@@ -86,8 +88,9 @@ return {
         },
       },
       overrides = function(colors)
-        local ts = require 'telescope'
-        return {}
+        return {
+          Folded = { fg = df.autumnYellow, bg = df.sumiInk2 },
+        }
       end,
       theme = 'wave',
       background = {
