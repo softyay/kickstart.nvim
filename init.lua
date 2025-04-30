@@ -84,6 +84,9 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+local config_dir = vim.fn.fnamemodify(vim.fn.expand '$MYVIMRC', ':p:h')
+local stylua_global_config = vim.fn.fnamemodify(config_dir .. '\\.stylua.toml', ':p')
+
 -- Vim Options
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -823,7 +826,7 @@ require('lazy').setup({
 
         lua_ls = {
           -- cmd = { ... },
-          -- filetypes = { ... },
+          filetypes = { 'lua' },
           -- capabilities = {},
           settings = {
             Lua = {
@@ -896,7 +899,7 @@ require('lazy').setup({
       },
     },
     opts = {
-      notify_on_error = false,
+      notify_on_error = true,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
@@ -913,11 +916,24 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        cs = { 'csharpier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+      formatters = {
+        stylua = {
+          args = {
+            '--config-path',
+            stylua_global_config,
+            '--stdin-filepath',
+            '$FILENAME',
+            '-',
+          },
+          cwd = nil,
+        },
       },
     },
   },
@@ -1173,7 +1189,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',

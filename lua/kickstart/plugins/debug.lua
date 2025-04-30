@@ -23,6 +23,7 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    'Samsung/netcoredbg',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -55,18 +56,32 @@ return {
       desc = 'Debug: Step Out',
     },
     {
-      '<leader>b',
+      '<leader>dbs',
       function()
         require('dap').toggle_breakpoint()
       end,
-      desc = 'Debug: Toggle Breakpoint',
+      desc = '[D]ebug: [B]reakpoints: [S]tandard',
     },
     {
-      '<leader>B',
+      '<leader>dbc',
       function()
         require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
       end,
-      desc = 'Debug: Set Breakpoint',
+      desc = '[D]ebug: [B]reakpoints: [C]onditional',
+    },
+    {
+      '<leader>dbd',
+      function()
+        require('dap').clear_breakpoints()
+      end,
+      desc = '[D]ebug: [B]reakpoints: [D]elete',
+    },
+    {
+      '<leader>dbl',
+      function()
+        require('dap').list_breakpoints(true)
+      end,
+      desc = '[D]ebug: [B]reakpoints: [L]ist',
     },
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
     {
@@ -94,7 +109,7 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        'delve',
+        -- 'delve',
       },
     }
 
@@ -105,32 +120,57 @@ return {
       --    Feel free to remove or use ones that you like more! :)
       --    Don't feel like these are good choices.
       icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-      controls = {
-        icons = {
-          pause = '⏸',
-          play = '▶',
-          step_into = '⏎',
-          step_over = '⏭',
-          step_out = '⏮',
-          step_back = 'b',
-          run_last = '▶▶',
-          terminate = '⏹',
-          disconnect = '⏏',
+      layouts = {
+        {
+          elements = {
+            {
+              id = 'scopes',
+              size = 0.25,
+            },
+            {
+              id = 'breakpoints',
+              size = 0.25,
+            },
+            {
+              id = 'stacks',
+              size = 0.25,
+            },
+            {
+              id = 'watches',
+              size = 0.25,
+            },
+          },
+          position = 'left',
+          size = 40,
+        },
+        {
+          elements = {
+            {
+              id = 'repl',
+              size = 0.5,
+            },
+            {
+              id = 'console',
+              size = 0.5,
+            },
+          },
+          position = 'bottom',
+          size = 10,
         },
       },
     }
 
     -- Change breakpoint icons
-    -- vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
-    -- vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
-    -- local breakpoint_icons = vim.g.have_nerd_font
-    --     and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
-    --   or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
-    -- for type, icon in pairs(breakpoint_icons) do
-    --   local tp = 'Dap' .. type
-    --   local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
-    --   vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
-    -- end
+    vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
+    vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
+    local breakpoint_icons = vim.g.have_nerd_font
+        and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
+      or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
+    for type, icon in pairs(breakpoint_icons) do
+      local tp = 'Dap' .. type
+      local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
+      vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
+    end
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
@@ -142,6 +182,176 @@ return {
         -- On Windows delve must be run attached or it crashes.
         -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
         detached = vim.fn.has 'win32' == 0,
+      },
+    }
+
+    -- -- NOTE: Layla
+    -- -- This is mostly jacked from 'NicholasMata/nvim-dap-cs',
+    -- -- but with '/' replaced with '\\'.
+    -- --
+    --
+    --
+    -- local display_options = function(prompt_title, options)
+    --   options = number_indices(options)
+    --   table.insert(options, 1, prompt_title)
+    --
+    --   local choice = vim.fn.inputlist(options)
+    --
+    --   if choice > 0 then
+    --     return options[choice + 1]
+    --   else
+    --     return nil
+    --   end
+    -- end
+    --
+    -- local file_selection = function(cmd, opts)
+    --   local results = vim.fn.systemlist(cmd)
+    --
+    --   if #results == 0 then
+    --     print(opts.empty_message)
+    --     return
+    --   end
+    --
+    --   if opts.allow_multiple then
+    --     return results
+    --   end
+    --
+    --   local result = results[1]
+    --   if #results > 1 then
+    --     result = display_options(opts.multiple_title_message, results)
+    --   end
+    --
+    --   return result
+    -- end
+    --
+    -- local project_selection = function(project_path)
+    --   local check_csproj_cmd = string.format('find %s -type f -name "*.csproj"', project_path)
+    --   local project_file = file_selection(check_csproj_cmd, {
+    --     empty_message = 'No csproj files found in ' .. project_path,
+    --     multiple_title_message = 'Select project:',
+    --   })
+    --   return project_file
+    -- end
+    --
+    local cwdItemInfo = require 'custom.utils.cwdItemInfo'
+
+    dap.configurations.cs = {
+      {
+        type = 'coreclr',
+        name = 'Launch And Attach',
+        request = 'attach',
+        -- program = function()
+        --     --   return dll
+        --     -- else
+        --     --   return dap.ABORT
+        -- end,
+        processId = function()
+          local function has_proj_file(path, incoming_depth, current_iterations)
+            local MaxIterations = 100000
+            local MaxDepth = 5
+
+            local current_depth = incoming_depth
+
+            while current_depth < MaxDepth and current_iterations < MaxIterations do
+              local file_matches = cwdItemInfo.get_files(path, 'csproj')
+              local dirs = cwdItemInfo.get_directories(path)
+              if #file_matches > 0 then
+                return true
+              elseif #dirs > 0 then
+                for i, dir in ipairs(dirs) do
+                  current_iterations = current_iterations + 1
+                  if has_proj_file(dir.fullpath, current_depth + 1, current_iterations) then
+                    return true
+                  end
+                end
+              end
+            end
+
+            return false
+          end
+
+          local function select_dll(path, incoming_depth, current_iterations)
+            local MaxIterations = 100000
+            local MaxDepth = 5
+
+            local current_depth = incoming_depth
+
+            if current_depth >= MaxDepth or current_iterations >= MaxIterations then
+              return nil
+            else
+              local file_matches = cwdItemInfo.get_files(path, 'dll')
+              local dirs = cwdItemInfo.get_directories(path)
+              print('files in ' .. path .. 'at depth ' .. current_depth .. 'that match pattern ' .. 'dll' .. ':\n', vim.inspect(file_matches))
+              -- print(vim.inspect(dirs))
+              if #file_matches > 0 then
+                print(file_matches[1].fullpath)
+                return file_matches[1].fullpath
+              end
+
+              if #dirs > 0 then
+                for i, dir in ipairs(dirs) do
+                  current_iterations = current_iterations + 1
+                  local dll = select_dll(dir.fullpath, current_depth + 1, current_iterations)
+                  if dll then
+                    return dll
+                  end
+                end
+              else
+                return nil
+              end
+            end
+
+            return nil
+          end
+
+          local has_proj = has_proj_file(vim.fn.getcwd(), 0, 0)
+          local dll = select_dll(vim.fn.getcwd(), 0, 0)
+          if has_proj and (dll ~= nil) then
+            -- Function to launch the external terminal and return the process’s PID
+            local function launch_process_and_get_pid(dll_path)
+              -- Build the command to launch Windows Terminal (wt) to run dotnet with your DLL.
+              -- This command opens a new interactive terminal window.
+              local terminal_cmd = 'start wt -w 0 cmd /k "dotnet ' .. dll_path .. '"'
+              print('Launching process: ' .. terminal_cmd)
+              os.execute(terminal_cmd)
+
+              -- Allow a bit of time (e.g. 2 seconds) for the process to start
+              vim.wait(1000, function()
+                return false
+              end)
+
+              -- Now, use a PowerShell command to query for the dotnet process running our DLL.
+              -- Note: We assume the DLL path appears (uniquely) in the process’s command line.
+              local ps_command = 'powershell -Command "Get-Process dotnet | Where-Object { $_.Path -like \'*'
+                .. dll_path:gsub('\\', '\\\\')
+                .. '*\' } | Select-Object -First 1 -Property Id | Format-Table -HideTableHeaders"'
+              print 'Running PowerShell command to find process:'
+              print(ps_command)
+              local output = vim.fn.systemlist(ps_command)
+              print 'Process query output:'
+              print(vim.inspect(output))
+
+              -- Parse the first line of output to extract the PID (an integer)
+              for _, line in ipairs(output) do
+                local pid = line:match '(%d+)'
+                if pid then
+                  print('Found PID:', pid)
+                  return tonumber(pid)
+                end
+              end
+
+              print 'No matching process found.'
+              return nil
+            end
+            return launch_process_and_get_pid(dll)
+          end
+        end,
+      },
+      {
+        type = 'coreclr',
+        name = 'hi',
+        request = 'launch',
+        processId = require('dap.utils').pick_process,
       },
     }
   end,
