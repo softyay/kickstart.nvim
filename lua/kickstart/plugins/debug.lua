@@ -23,7 +23,7 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
-    'Samsung/netcoredbg',
+    -- 'Samsung/netcoredbg',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -185,54 +185,8 @@ return {
       },
     }
 
-    -- -- NOTE: Layla
-    -- -- This is mostly jacked from 'NicholasMata/nvim-dap-cs',
-    -- -- but with '/' replaced with '\\'.
-    -- --
-    --
-    --
-    -- local display_options = function(prompt_title, options)
-    --   options = number_indices(options)
-    --   table.insert(options, 1, prompt_title)
-    --
-    --   local choice = vim.fn.inputlist(options)
-    --
-    --   if choice > 0 then
-    --     return options[choice + 1]
-    --   else
-    --     return nil
-    --   end
-    -- end
-    --
-    -- local file_selection = function(cmd, opts)
-    --   local results = vim.fn.systemlist(cmd)
-    --
-    --   if #results == 0 then
-    --     print(opts.empty_message)
-    --     return
-    --   end
-    --
-    --   if opts.allow_multiple then
-    --     return results
-    --   end
-    --
-    --   local result = results[1]
-    --   if #results > 1 then
-    --     result = display_options(opts.multiple_title_message, results)
-    --   end
-    --
-    --   return result
-    -- end
-    --
-    -- local project_selection = function(project_path)
-    --   local check_csproj_cmd = string.format('find %s -type f -name "*.csproj"', project_path)
-    --   local project_file = file_selection(check_csproj_cmd, {
-    --     empty_message = 'No csproj files found in ' .. project_path,
-    --     multiple_title_message = 'Select project:',
-    --   })
-    --   return project_file
-    -- end
-    --
+    -- NOTE: Layla
+    --[[
     local cwdItemInfo = require 'custom.utils.cwdItemInfo'
 
     dap.configurations.cs = {
@@ -354,5 +308,6 @@ return {
         processId = require('dap.utils').pick_process,
       },
     }
+    --]]
   end,
 }
