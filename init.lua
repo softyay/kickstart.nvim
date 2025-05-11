@@ -812,7 +812,12 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {
+          filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+          root_dir = require('lspconfig.util').root_pattern('CMakeLists.txt', '.git'),
           capabilities = capabilities,
+          flags = {
+            debounce_text_changes = 150,
+          },
         },
         -- gopls = {},
         -- pyright = {},
