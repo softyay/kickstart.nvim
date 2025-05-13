@@ -1,13 +1,21 @@
-local kanagawa_theme = require 'custom.plugins.softKanaLua'
+local kanagawa_theme_builder = require 'custom.utils.softKanaLua'
+local lualine_theme = {}
 
 return {
   'nvim-lualine/lualine.nvim',
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  event = 'VimEnter',
+  dependencies = {
+    'nvim-tree/nvim-web-devicons',
+    require 'custom.plugins.softKanagawa',
+  },
   config = function()
+    local kana = require('kanagawa.colors').setup({ 'wave' }).palette
+    lualine_theme = kanagawa_theme_builder.fuckingFuck(kana)
+
     require('lualine').setup {
       options = {
+        theme = lualine_theme,
         icons_enabled = true,
-        theme = 'auto',
         component_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
         disabled_filetypes = {

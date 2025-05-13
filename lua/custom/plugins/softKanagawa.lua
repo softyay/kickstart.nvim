@@ -6,7 +6,8 @@ local default_wave_palette = {}
 -- NOTE: This is unused.
 -- Don't know if it's actually even practical
 -- to use, but it could be.
-local RENAMED_ELEMENTS_MAP = {
+--
+--[[local RENAMED_ELEMENTS_MAP = {
   editor_background = default_wave_palette.sumiInk0, -- bg
   current_line_highlight = default_wave_palette.sumiInk4, -- bg_p2
   visual_highlight = default_wave_palette.winterRed, -- bg_visual
@@ -24,6 +25,7 @@ local RENAMED_ELEMENTS_MAP = {
   unknown_d = 'magenta', -- bg_m1
   whitespace = default_wave_palette.sumiInk6, -- whitespace
 }
+--]]
 
 -- A LazyPluginSpec (? i think ?)
 return {
@@ -43,7 +45,6 @@ return {
       dimInactive = false,
       terminalColors = false,
       colors = {
-        palette = {},
         theme = {
           wave = {
             ui = {
