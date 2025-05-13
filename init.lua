@@ -362,20 +362,6 @@ require('lazy').setup({
       }
     end,
   },
-  --
-  -- Here is a more advanced example where we pass configuration
-  -- options to `gitsigns.nvim`.
-  -- See `:help gitsigns` to understand what the configuration keys do
-  --
-  --  WARNING:
-  --  Not really an example of ^^ anymore.
-  --  a lot of this got copied to the full config above,
-  --  and got lost in the fray 😅
-  --
-  --{ -- Adds git related signs to the gutter, as well as utilities for managing changes
-  --  'lewis6991/gitsigns.nvim',
-  --},
-  --},
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -440,7 +426,8 @@ require('lazy').setup({
       spec = {
         { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
-        { '<leader>e', group = '[E]xplore' }, -- NOTE: Layla added
+        { '<leader>db', group = '[D]e[b]ug' }, -- NOTE Lay added
+        { '<leader>e', group = '[E]xplore' }, -- NOTE: Lay added
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
@@ -1025,9 +1012,9 @@ require('lazy').setup({
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          ['<CR>'] = cmp.mapping.confirm { select = true },
-          ['<Tab>'] = cmp.mapping.select_next_item(),
-          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+          ['<Tab>'] = cmp.mapping.confirm { select = true },
+          -- ['<Tab>'] = cmp.mapping.select_next_item(),
+          -- ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -1097,7 +1084,14 @@ require('lazy').setup({
   },
 
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'folke/todo-comments.nvim',
+    event = 'VimEnter',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      signs = true,
+    },
+  },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',

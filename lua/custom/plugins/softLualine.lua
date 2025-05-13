@@ -1,3 +1,5 @@
+local kana = require 'custom.plugins.softKanagawa'
+
 return {
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },

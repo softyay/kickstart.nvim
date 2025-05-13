@@ -1,12 +1,19 @@
--- A LazyPluginSpec (? i think ?)
 local PRIORITY = 999
 local TRANSPARENT_BKG = false
+-- NOTE: This is unused.
+-- Don't know if it's actually even practical
+-- to use, but it could be.
+-- local RENAMED_ELEMENTS_MAP = {
+--   editor_background = default_wave_palette.sumiInk0, -- bg
+--   current_line_highlight = default_wave_palette.sumiInk4, -- bg_p2
+-- }
 
+-- A LazyPluginSpec (? i think ?)
 return {
   'rebelot/kanagawa.nvim',
   priority = PRIORITY, -- Make sure to load this before all the other start plugins.
   config = function()
-    local df = require('kanagawa.colors').setup({ theme = 'wave' }).palette
+    default_wave_palette = require('kanagawa.colors').setup({ theme = 'wave' }).palette
     require('kanagawa').setup {
       compile = false,
       undercurl = true,
@@ -24,64 +31,64 @@ return {
           wave = {
             ui = {
               -- NOTE: EDITOR BACKGROUND
-              bg = df.sumiInk0,
+              bg = default_wave_palette.sumiInk0,
               -- CURRENT LINE HIGHLIGHT
-              bg_p2 = df.sumiInk4,
+              bg_p2 = default_wave_palette.sumiInk4,
 
               -- VISUAL HIGHLIGHT
-              bg_visual = df.winterRed,
+              bg_visual = default_wave_palette.winterRed,
 
               -- DEFAULT TEXT
-              fg = df.fujiWhite,
+              fg = default_wave_palette.fujiWhite,
 
               -- normal mode status bar TEXT
               -- & status bar background (NOT FOCUSED)??
-              bg_m3 = df.dragonBlack2,
+              bg_m3 = default_wave_palette.dragonBlack2,
 
-              special = df.dragonBlack5,
+              special = default_wave_palette.dragonBlack5,
 
               -- ??
-              bg_dim = yellow,
+              bg_dim = 'yellow',
 
               -- STATUS BAR FILE TEXT (FOCUSED)
-              fg_dim = df.oldWhite,
+              fg_dim = default_wave_palette.oldWhite,
               -- STATUS BAR FILE BKG (FOCUS)
-              bg_p1 = df.dragonAsh,
+              bg_p1 = default_wave_palette.dragonAsh,
 
               -- SEARCH TEXT
-              fg_reverse = df.dragonBlack0,
+              fg_reverse = default_wave_palette.dragonBlack0,
               -- SEARCH BACKGROUND
-              bg_search = df.waveBlue1,
+              bg_search = default_wave_palette.waveBlue1,
 
               -- SIDE TEXT
-              nontext = df.sumiInk6,
+              nontext = default_wave_palette.sumiInk6,
               -- SIDE BACKGROUND
               -- && NORMAL MODE STATUS BKG
-              bg_gutter = df.sumiInk2,
+              bg_gutter = default_wave_palette.sumiInk2,
 
               -- ?
               bg_m2 = 'cyan',
               -- ?
               bg_m1 = 'magenta',
 
-              whitespace = df.sumiInk6,
+              whitespace = default_wave_palette.sumiInk6,
 
               -- Auto Complete
               pmenu = {
-                fg = df.fujiWhite,
+                fg = default_wave_palette.fujiWhite,
                 fg_sel = 'none', -- This is important to make highlights pass-through
-                bg = df.waveBlue1,
-                bg_sel = df.waveBlue2,
-                bg_sbar = df.waveBlue1,
-                bg_thumb = df.waveBlue2,
+                bg = default_wave_palette.waveBlue1,
+                bg_sel = default_wave_palette.waveBlue2,
+                bg_sbar = default_wave_palette.waveBlue1,
+                bg_thumb = default_wave_palette.waveBlue2,
               },
 
               -- Popup Windows (i.e. MiniFiles)
               float = {
-                fg = df.oldWhite,
-                bg = df.sumiInk0,
-                fg_border = df.sumiInk6,
-                bg_border = df.sumiInk0,
+                fg = default_wave_palette.oldWhite,
+                bg = default_wave_palette.sumiInk0,
+                fg_border = default_wave_palette.sumiInk6,
+                bg_border = default_wave_palette.sumiInk0,
               },
             },
           },
@@ -89,7 +96,7 @@ return {
       },
       overrides = function(colors)
         return {
-          Folded = { fg = df.autumnYellow, bg = df.sumiInk2 },
+          Folded = { fg = default_wave_palette.autumnYellow, bg = default_wave_palette.sumiInk2 },
         }
       end,
       theme = 'wave',
