@@ -1,4 +1,4 @@
-local kana = require 'custom.plugins.softKanagawa'
+local kanagawa_theme = require 'custom.plugins.softKanaLua'
 
 return {
   'nvim-lualine/lualine.nvim',

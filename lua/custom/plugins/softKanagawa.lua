@@ -1,12 +1,29 @@
 local PRIORITY = 999
 local TRANSPARENT_BKG = false
+
+local default_wave_palette = {}
+
 -- NOTE: This is unused.
 -- Don't know if it's actually even practical
 -- to use, but it could be.
--- local RENAMED_ELEMENTS_MAP = {
---   editor_background = default_wave_palette.sumiInk0, -- bg
---   current_line_highlight = default_wave_palette.sumiInk4, -- bg_p2
--- }
+local RENAMED_ELEMENTS_MAP = {
+  editor_background = default_wave_palette.sumiInk0, -- bg
+  current_line_highlight = default_wave_palette.sumiInk4, -- bg_p2
+  visual_highlight = default_wave_palette.winterRed, -- bg_visual
+  default_text = default_wave_palette.fujiWhite, -- fg
+  normal_mode_status_bar_TEXT_and_UNFOCUSED_status_bar_bkg = default_wave_palette.dragonBlack2, -- bg_m3
+  unknown_a = default_wave_palette.dragonBlack5, -- special
+  unknown_b = 'yellow', -- bg_dim
+  status_bar_file_text_focused = default_wave_palette.oldWhite, -- fg_dim
+  status_bar_file_bkg_focused = default_wave_palette.dragonAsh, -- bg_p1
+  search_text = default_wave_palette.dragonBlack0, -- fg_reverse
+  search_background = default_wave_palette.waveBlue1, -- bg_search
+  side_text = default_wave_palette.sumiInk6, -- nontext
+  side_background_AND_normal_mode_status_bkg = default_wave_palette.sumiInk2, -- bg_gutter
+  unknown_c = 'cyan', -- bg_m2
+  unknown_d = 'magenta', -- bg_m1
+  whitespace = default_wave_palette.sumiInk6, -- whitespace
+}
 
 -- A LazyPluginSpec (? i think ?)
 return {
@@ -24,7 +41,7 @@ return {
       typeStyle = {},
       transparent = TRANSPARENT_BKG,
       dimInactive = false,
-      terminalColors = true,
+      terminalColors = false,
       colors = {
         palette = {},
         theme = {
@@ -32,6 +49,7 @@ return {
             ui = {
               -- NOTE: EDITOR BACKGROUND
               bg = default_wave_palette.sumiInk0,
+
               -- CURRENT LINE HIGHLIGHT
               bg_p2 = default_wave_palette.sumiInk4,
 
@@ -41,18 +59,18 @@ return {
               -- DEFAULT TEXT
               fg = default_wave_palette.fujiWhite,
 
-              -- normal mode status bar TEXT
-              -- & status bar background (NOT FOCUSED)??
+              -- normal mode status bar TEXT and UNFOCUSED status bar bkg
               bg_m3 = default_wave_palette.dragonBlack2,
 
+              -- UNKNOWN A
               special = default_wave_palette.dragonBlack5,
 
-              -- ??
+              -- UNKNOWN B
               bg_dim = 'yellow',
 
-              -- STATUS BAR FILE TEXT (FOCUSED)
+              -- STATUS BAR FILE TEXT FOCUSED
               fg_dim = default_wave_palette.oldWhite,
-              -- STATUS BAR FILE BKG (FOCUS)
+              -- STATUS BAR FILE BKG FOCUSED
               bg_p1 = default_wave_palette.dragonAsh,
 
               -- SEARCH TEXT
@@ -62,18 +80,19 @@ return {
 
               -- SIDE TEXT
               nontext = default_wave_palette.sumiInk6,
-              -- SIDE BACKGROUND
-              -- && NORMAL MODE STATUS BKG
+
+              -- SIDE BACKGROUND and NORMAL MODE STATUS BKG
               bg_gutter = default_wave_palette.sumiInk2,
 
-              -- ?
+              -- UNKNOWN C
               bg_m2 = 'cyan',
-              -- ?
+              -- UNKNOWN D
               bg_m1 = 'magenta',
 
+              -- WHITESPACE
               whitespace = default_wave_palette.sumiInk6,
 
-              -- Auto Complete
+              -- AUTO COMPLETE
               pmenu = {
                 fg = default_wave_palette.fujiWhite,
                 fg_sel = 'none', -- This is important to make highlights pass-through
