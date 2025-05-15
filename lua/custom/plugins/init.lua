@@ -4,10 +4,10 @@
 -- See the kickstart.nvim README for more information
 --
 
-local softKanagawa = require 'custom.plugins.softKanagawa'
--- local softMiniFile = require 'custom.plugins.softMiniFile'
--- local softLuaLine = require 'custom.plugins.softLualine'
--- local softTabby = require 'custom.plugins.softTabby'
+local softKanagawa = require 'custom.configs.softKanagawa'
+local softMiniFile = require 'custom.configs.softMiniFile'
+local softLuaLine = require 'custom.configs.softLualine'
+-- local softTabby = require 'custom.configs.softTabby'
 return {
   -- the colorscheme should be available when starting Neovim
   --[[
@@ -22,8 +22,8 @@ return {
   },
   --]]
   { softKanagawa },
-  -- { softMiniFile },
-  -- { softLuaLine },
+  { softMiniFile },
+  { softLuaLine },
   -- { softTabby },
 
   -- NOTE: Commenting all of this out for sanity, but it is copied

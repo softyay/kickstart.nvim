@@ -1,6 +1,6 @@
 local M = {}
 
-M.fuckingFuck = function(palette)
+M.get_lualine_theme = function(palette)
   local kana = palette
   return {
     normal = {
@@ -44,12 +44,20 @@ M.fuckingFuck = function(palette)
       z = { bg = kana.roninYellow, fg = kana.dragonBlack2 },
     },
     inactive = {
-      a = { bg = kana.dragonBlack2, fg = kana.dragonAsh, gui = 'italic' },
-      b = { bg = kana.sumiInk2, fg = kana.waveBlue2, gui = 'italic' },
+      a = { bg = kana.dragonBlack5, fg = kana.dragonAsh, gui = 'italic' },
+      b = { bg = kana.dragonBlack4, fg = kana.dragonAsh, gui = 'italic' },
       c = { bg = kana.dragonBlack2, fg = kana.dragonAsh, gui = 'italic' },
       x = { bg = kana.dragonBlack2, fg = kana.dragonAsh, gui = 'italic' },
-      y = { bg = kana.sumiInk2, fg = kana.waveBlue2, gui = 'italic' },
-      z = { bg = kana.dragonBlack2, fg = kana.dragonAsh, gui = 'italic' },
+      y = { bg = kana.dragonBlack4, fg = kana.dragonAsh, gui = 'italic' },
+      z = { bg = kana.dragonBlack5, fg = kana.dragonAsh, gui = 'italic' },
+    },
+    winbar = {
+      a = { bg = kana.dragonBlack5, fg = kana.dragonAsh, gui = 'italic' },
+      b = { bg = kana.dragonBlack4, fg = kana.dragonAsh, gui = 'italic' },
+      c = { bg = kana.dragonBlack2, fg = kana.dragonAsh, gui = 'italic' },
+      x = { bg = kana.dragonBlack2, fg = kana.dragonAsh, gui = 'italic' },
+      y = { bg = kana.dragonBlack4, fg = kana.dragonAsh, gui = 'italic' },
+      z = { bg = kana.dragonBlack5, fg = kana.dragonAsh, gui = 'italic' },
     },
   }
 end

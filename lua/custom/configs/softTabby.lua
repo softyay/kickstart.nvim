@@ -8,26 +8,41 @@ local default_theme = {
   tail = 'TabLine', -- tail element highlight
 }
 
-local lualine_theme = {}
+local log = '[TabbyLog]: // '
+
+local lualine_theme = default_theme
 
 -- FIX: This is a gd bonfire disaster from sleep deprivation.
 -- Clean up when poss
 local get_lualine_colors = function(vim_mode)
   local mode = vim.fn.mode()
   if lualine_theme == nil then
+    log = log .. 'no lualine theme // '
     return default_theme
   elseif mode == 'n' or mode == 'normal' then
-    return lualine_theme.normal and lualine_theme.normal or default_theme
+    if lualine_theme.normal then
+      log = log .. 'found normal colors // '
+      return lualine_theme.normal
+    end
   elseif mode == 'i' or mode == 'insert' then
-    return lualine_theme.insert and lualine_theme.insert or default_theme
+    if lualine_theme.insert then
+      log = log .. 'found insert colors // '
+      return lualine_theme.insert
+    end
   elseif mode == 'R' or mode == 'Rv' or mode == 'replace' then
-    return lualine_theme.replace and lualine_theme.replace or default_theme
+    if lualine_theme.replace then
+      log = log .. 'found replace colors // '
+      return lualine_theme.replace
+    end
   elseif mode == 'c' then
-    return lualine_theme.command and lualine_theme.command or default_theme
-  else
-    print('setting tabby to default theme with mode ' .. vim_mode)
-    return default_theme
+    if lualine_theme.command then
+      log = log .. 'found command colors // '
+      return lualine_theme.command
+    end
   end
+
+  log = log .. 'no colors for [' .. vim_mode .. '], set def // '
+  return default_theme
 end
 
 local convert_to_tabby_theme = function(line_colors)
@@ -40,6 +55,7 @@ local convert_to_tabby_theme = function(line_colors)
       win = line_colors.c,
       tail = line_colors.a,
     }
+  else
   end
   return default_theme
 end
@@ -66,13 +82,13 @@ end
 vim.api.nvim_create_autocmd('ModeChanged', {
   pattern = '*',
   callback = function()
-    local mode_info = vim.api.nvim_get_mode()
     local prev_mode = vim.v.event.old_mode
     local new_mode = vim.v.event.new_mode
 
     local new_theme = convert_to_tabby_theme(get_lualine_colors(new_mode))
     setup_internal(new_theme)
-    print('mode changed to ' .. new_mode)
+    print(log)
+    log = '[TabbyLog]: // '
   end,
 })
 
@@ -87,8 +103,9 @@ return {
     local lualine = require 'custom.plugins.softLualine'
     lualine_theme = lualine.lualine_theme
     local current_mode = vim.api.nvim_get_mode()
-    local tabby_theme = convert_to_tabby_theme(get_lualine_colors(current_mode))
-    setup_internal(tabby_theme)
+    local ll_colors = get_lualine_colors(current_mode)
+    local theme = convert_to_tabby_theme(ll_colors)
+    setup_internal(theme)
     vim.cmd 'colorscheme kanagawa'
   end,
 }
