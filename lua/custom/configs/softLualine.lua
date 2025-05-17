@@ -275,7 +275,13 @@ local config_fn = function()
         },
       },
     },
-    extensions = {},
+    extensions = {
+      'fzf',
+      'lazy',
+      'nvim-dap-ui',
+      'mason',
+      'quickfix',
+    },
   }
 
   -- create mappitg for renaming tabs
