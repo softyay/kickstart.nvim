@@ -1,7 +1,7 @@
 local M = {}
 local kanagawa_theme_builder = require 'custom.utils.softKanaLua'
 local lualine_theme = {}
-local lualine_separator_style = 'ice'
+local lualine_separator_style = 'round'
 
 local win_num = function()
   return 'win: ' .. vim.api.nvim_get_current_win()
@@ -40,8 +40,7 @@ end
 -- stylua: ignore end
 --
 local dumdum = function()
-  print 'hi'
-  return 'hi'
+  return 'this is dumdum func'
 end
 
 local invert = function(sep_table)
@@ -95,10 +94,6 @@ return {
           {
             'diff',
           },
-          {
-            'diagnostics',
-            draw_empty = true,
-          },
         },
         lualine_c = {
           {
@@ -111,7 +106,6 @@ return {
         lualine_x = {
           {
             'filetype',
-            icon_only = true,
           },
         },
         lualine_y = {
@@ -126,7 +120,11 @@ return {
         },
       },
       inactive_sections = {
-        lualine_a = { win_num, buff_id },
+        lualine_a = {
+          {
+            'mode',
+          },
+        },
         lualine_b = {
           {
             'branch',
@@ -134,16 +132,22 @@ return {
           {
             'diff',
           },
-          {
-            'diagnostics',
-          },
         },
         lualine_c = {
           {
             'filename',
+            fmt = function(str)
+              return str:match '(.+)%..+$' or str
+            end,
           },
         },
         lualine_x = {
+          {
+            function()
+              return ''
+            end,
+            draw_empty = true,
+          },
           {
             'filetype',
           },
@@ -163,16 +167,12 @@ return {
         lualine_a = {
           {
             'tabs',
-            mode = 2,
-            use_mode_colors = true,
-            separator = invert(section_sep(lualine_separator_style)),
-          },
-        },
-        lualine_c = {
-          {
-            dumdum,
-            draw_empty = true,
-            color = lualine_theme.inactive,
+            mode = 0,
+            -- separator = invert(section_sep(lualine_separator_style)),
+            tabs_color = {
+              active = lualine_theme.inactive.a,
+              inactive = lualine_theme.inactive.b,
+            },
           },
         },
         lualine_z = {
@@ -180,8 +180,8 @@ return {
             'windows',
             use_mode_colors = false,
             windows_color = {
-              active = lualine_theme.inactive,
-              inactive = lualine_theme.inactive,
+              active = lualine_theme.normal.a,
+              inactive = lualine_theme.inactive.b,
             },
           },
         },
@@ -194,20 +194,23 @@ return {
         },
         lualine_b = {
           {
-            'branch',
-          },
-          {
-            'diff',
-          },
-          {
-            'diagnostics',
+            'lsp_status',
           },
         },
         lualine_c = {
-          win_num,
-          buff_id,
+          {
+            'diagnostics',
+            always_visible = true,
+          },
         },
-        lualine_x = {},
+        lualine_x = {
+          {
+            win_num,
+          },
+          {
+            buff_id,
+          },
+        },
         lualine_y = {
           {
             'progress',
@@ -227,20 +230,24 @@ return {
         },
         lualine_b = {
           {
-            'branch',
-          },
-          {
-            'diff',
-          },
-          {
-            'diagnostics',
+            'lsp_status',
           },
         },
         lualine_c = {
-          win_num,
-          buff_id,
+          {
+            'diagnostics',
+            colored = false,
+            always_visible = true,
+          },
         },
-        lualine_x = {},
+        lualine_x = {
+          {
+            win_num,
+          },
+          {
+            buff_id,
+          },
+        },
         lualine_y = {
           {
             'progress',
