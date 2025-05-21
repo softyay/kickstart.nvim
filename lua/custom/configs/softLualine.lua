@@ -25,11 +25,19 @@ local buff_id = function()
   return 'buf: ' .. vim.api.nvim_get_current_buf()
 end
 
-local rename_wrapper = function()
-  local new_name = vim.fn.input 'New name: '
+local get_name_input = function()
+  return vim.fn.input 'New tab name: '
+end
+
+local rename_wrapper = function(new_name)
   if vim.fn.exists ':LualineRename' == 1 then
     vim.cmd.LualineRename(new_name)
   end
+end
+
+local new_tab_wrapper = function(new_name)
+  vim.cmd 'tabnew'
+  rename_wrapper(new_name)
 end
 
 local invert = function(sep_table)
@@ -284,10 +292,22 @@ local config_fn = function()
     },
   }
 
-  -- create mappitg for renaming tabs
-  vim.keymap.set('n', '<leader>rt', function()
-    rename_wrapper()
-  end, { desc = 'Rename the current tab in LuaLine' })
+  -- New empty tab named to input from cmd
+  vim.keymap.set('n', '<leader>bnn', function()
+    local new_name = get_name_input()
+    new_tab_wrapper(new_name)
+  end, { desc = 'Ta[b] [n]ew with [n]ame' })
+
+  -- Rename tab to input from cmd
+  vim.keymap.set('n', '<leader>brn', function()
+    local new_name = get_name_input()
+    rename_wrapper(new_name)
+  end, { desc = 'Ta[b] [r]e[n]ame' })
+
+  local wk = require 'which-key'
+  wk.add {
+    { '<leader>b', group = 'Ta[b]s', mode = { 'n' } },
+  }
 end
 -- ============================================================================
 
