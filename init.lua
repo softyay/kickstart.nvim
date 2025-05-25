@@ -95,7 +95,7 @@ local stylua_global_config_unix = vim.fn.fnamemodify(config_dir .. '/.stylua.tom
 
 local get_stylua_config = function()
   -- If path separator is a backslash, it's Windows
-  if (package.config:sub(1,1) == '/') then
+  if package.config:sub(1, 1) == '/' then
     return stylua_global_config_unix
   else
     return stylua_global_config_win
