@@ -90,7 +90,17 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- Path info
 -- ============================================================================
 local config_dir = vim.fn.fnamemodify(vim.fn.expand '$MYVIMRC', ':p:h')
-local stylua_global_config = vim.fn.fnamemodify(config_dir .. '\\.stylua.toml', ':p')
+local stylua_global_config_win = vim.fn.fnamemodify(config_dir .. '\\.stylua.toml', ':p')
+local stylua_global_config_unix = vim.fn.fnamemodify(config_dir .. '/.stylua.toml', ':p')
+
+local get_stylua_config = function()
+  -- If path separator is a backslash, it's Windows
+  if (package.config:sub(1,1) == '/') then
+    return stylua_global_config_unix
+  else
+    return stylua_global_config_win
+  end
+end
 -- ============================================================================
 
 -- Vim Options
@@ -954,7 +964,7 @@ require('lazy').setup({
         stylua = {
           args = {
             '--config-path',
-            stylua_global_config,
+            get_stylua_config(),
             '--stdin-filepath',
             '$FILENAME',
             '-',
