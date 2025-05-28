@@ -87,20 +87,16 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 -- ============================================================================
 
+-- Operating System Info
+-- ============================================================================
+local os_finder = require 'custom.utils.osFinder'
+local os = os_finder.get_operating_system()
+-- ============================================================================
+
 -- Path info
 -- ============================================================================
 local config_dir = vim.fn.fnamemodify(vim.fn.expand '$MYVIMRC', ':p:h')
-local stylua_global_config_win = vim.fn.fnamemodify(config_dir .. '\\.stylua.toml', ':p')
-local stylua_global_config_unix = vim.fn.fnamemodify(config_dir .. '/.stylua.toml', ':p')
-
-local get_stylua_config = function()
-  -- If path separator is a backslash, it's Windows
-  if (package.config:sub(1,1) == '/') then
-    return stylua_global_config_unix
-  else
-    return stylua_global_config_win
-  end
-end
+local stylua_global_config = vim.fn.fnamemodify(config_dir .. os.separator .. '.stylua.toml', ':p')
 -- ============================================================================
 
 -- Vim Options
@@ -964,7 +960,7 @@ require('lazy').setup({
         stylua = {
           args = {
             '--config-path',
-            get_stylua_config(),
+            stylua_global_config,
             '--stdin-filepath',
             '$FILENAME',
             '-',
