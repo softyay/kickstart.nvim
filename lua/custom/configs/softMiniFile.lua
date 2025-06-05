@@ -65,7 +65,7 @@ local passes_all_filters = function(entry)
 
     if not passes_current_filter(entry) then
       if current_filter.show_debug_messages then
-        local prompt = "Entry '" .. entry .. "' was filtered by filter " .. i .. ' (' .. filters[i].name .. ') \n'
+        local prompt = "Entry '" .. entry.name .. "' was filtered by filter " .. i .. ' (' .. filters[i].name .. ') \n'
         prompt = prompt .. 'Enter -> continue\n'
         prompt = prompt .. "'off' -> disable debug mode for this filter\n"
         prompt = prompt .. "'all off' -> disable debug mode off for all filters\n"
