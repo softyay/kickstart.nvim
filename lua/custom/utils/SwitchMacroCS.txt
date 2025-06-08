@@ -1,0 +1,15 @@
+
+gather shit (@s)
+^2f €ý5lve"zyjV%koj"xyk%o// keep z x c v clear temporarily] jjko// keep s w i t y clear permanently] jo// var: _] jo// count: _] jo// run @w for standat€kbrf€kbd or @t for inline (HERE)kddkkddkkddkkddkVjjjj
+
+standard format (@w)
+k0f:€ý5ll"cyiwk0f:€ý5ll"vyiwjj] joswitch (){}kkf(€ý5"vpj"xp:execute "normal! " . getreg("c") . "@i"kodefault:breal;€kb€kbk;j%kkVkkkkkd
+
+standard line (@i, called n times by @w)
+^i"zpa.^icase A€kb:break;] jj
+
+inline format (@t)
+k0f:€ý5ll"cyiwk0f:€ý5ll"vyiwjj] joint newVar = "vpa switch{};k"xp:execuste€kb€kb€kbte "normal! " . getreg("c") . "@y"ko_ => 0,jh%kkkVkkkkdddVj^%
+
+inline line (@y, called n times by @t)
+^i"zpa.A€kb => 0,j
