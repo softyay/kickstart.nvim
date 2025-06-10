@@ -1,6 +1,7 @@
 local maxWindows = 3
 
 -- Filter class
+-- ============================================================================
 local Filter = {
   name = 'Unnamed Filter',
   enabled = false,
@@ -34,24 +35,31 @@ function Filter:get_callback()
 end
 --stylua: ignore end
 
-function Filter.new(name, start_enabled, should_show_entry)
+function Filter.new(name, start_enabled, start_debug_enabled, should_show_entry)
   local self = setmetatable({}, Filter)
   self.name = name
   self.enabled = start_enabled
   self.should_show_entry = should_show_entry
+  self.show_debug_messages = start_debug_enabled
   return self
 end
+-- ============================================================================
+
+-- Filters
+-- ============================================================================
 
 -- .meta filtering
-local meta_filter = Filter.new('Meta Files', false, function(entry)
+local meta_filter = Filter.new('Meta Files', false, false, function(entry)
   return not vim.endswith(entry.name, '.meta')
 end)
+
+-- ============================================================================
 
 local filters = {
   meta_filter,
 }
 
-local disable_all = false
+local disable_debug_msg_all_filters = false
 local passes_all_filters = function(entry)
   filter_calls = filter_calls + 1
 
@@ -59,7 +67,7 @@ local passes_all_filters = function(entry)
     local current_filter = filters[i]
     local passes_current_filter = current_filter:get_callback()
 
-    if disable_all then
+    if disable_debug_msg_all_filters then
       current_filter.show_debug_messages = false
     end
 
@@ -74,7 +82,7 @@ local passes_all_filters = function(entry)
           current_filter.show_debug_messages = false
         elseif inp == 'all off' then
           current_filter.show_debug_messages = false
-          disable_all = true
+          disable_debug_msg_all_filters = true
         end
       end
 
