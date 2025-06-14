@@ -1,8 +1,8 @@
 -- Main File for wrangling custom configs for plugins
 
-local softKanagawa = require 'custom.configs.softKanagawa'
+local softColor = require 'custom.colors.softColorConfig'
 local softMiniFile = require 'custom.configs.softMiniFile'
-local softLuaLine = require 'custom.configs.softLualine'
+local softLualine = require 'custom.configs.softLualine'
 local softInlineDiag = require 'custom.configs.softInlineDiag'
 return {
   -- the colorscheme should be available when starting Neovim
@@ -17,10 +17,10 @@ return {
     end,
   },
   --]]
-  { softKanagawa },
+  softColor.GetConfigTable(),
   { softInlineDiag.config_table },
   { softMiniFile },
-  { softLuaLine },
+  { softLualine },
 
   -- -- you can use the VeryLazy event for things that can
   -- -- load later and are not important for the initial UI

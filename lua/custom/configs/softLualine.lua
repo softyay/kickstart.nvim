@@ -1,4 +1,5 @@
-local kanagawa_theme_builder = require 'custom.utils.softKanaLua'
+local softColor = require 'custom.colors.softColorConfig'
+
 local lualine_theme = {}
 local lualine_separator_style = 'round'
 local standalone_separator_component = function(component_color, num_spaces)
@@ -82,12 +83,11 @@ end
 -- Config function
 -- ============================================================================
 local config_fn = function()
-  -- local kana = require('kanagawa.colors').setup({ 'wave' }).palette
-  lualine_theme = kanagawa_theme_builder.get_lualine_theme {}
+  local scheme = softColor.GetScheme()
 
   require('lualine').setup {
     options = {
-      theme = lualine_theme,
+      theme = scheme.get_lualine_theme(),
       icons_enabled = true,
       component_separators = component_sep(lualine_separator_style),
       section_separators = section_sep(lualine_separator_style),
@@ -187,26 +187,20 @@ local config_fn = function()
         {
           'tabs',
           mode = 2,
-          tabs_color = {
-            active = kanagawa_theme_builder.get_tab_colors().active,
-            inactive = kanagawa_theme_builder.get_tab_colors().inactive,
-          },
+          tabs_color = scheme.get_lualine_tab_colors(),
         },
       },
       lualine_y = {
         {
           'windows',
           use_mode_colors = true,
-          windows_color = {
-            active = kanagawa_theme_builder.get_tab_colors().active,
-            inactive = kanagawa_theme_builder.get_tab_colors().inactive,
-          },
+          windows_color = scheme.get_lualine_tab_colors(),
         },
       },
       lualine_z = {
         {
           'datetime',
-          color = lualine_theme.inactive.c,
+          color = scheme.get_lualine_theme().inactive.c,
         },
       },
     },
@@ -313,10 +307,12 @@ end
 
 return {
   'nvim-lualine/lualine.nvim',
-  event = 'VimEnter',
   dependencies = {
     'nvim-tree/nvim-web-devicons',
-    require 'custom.configs.softKanagawa',
+    require 'custom.colors.softColorConfig',
   },
+  priority = 0,
+  event = 'VeryLazy',
+
   config = config_fn,
 }

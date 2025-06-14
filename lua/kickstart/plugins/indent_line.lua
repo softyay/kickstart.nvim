@@ -40,8 +40,9 @@ local defaults = {
 
 local config_fn = function()
   local hooks = require 'ibl.hooks'
-  local theme_builder = require 'custom.utils.softKanaLua'
-  local color_table = theme_builder ~= nil and theme_builder.get_indentline_rainbow() or defaults
+  local softColor = require 'custom.colors.softColorConfig'
+  local scheme = softColor.GetScheme()
+  local color_table = scheme ~= nil and scheme.get_indentline_rainbow() or defaults
 
   -- create the highlight groups in the highlight setup hook, so they are reset
   -- every time the colorscheme changes
@@ -66,6 +67,8 @@ return {
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help ibl`
+    dependencies = { require 'custom.colors.softColorConfig' },
+    event = 'VeryLazy',
     main = 'ibl',
     config = config_fn,
   },
