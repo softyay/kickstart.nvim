@@ -1,5 +1,5 @@
 local core = require 'softLualine.core'
-local lualine_ext = require 'softKanagawa.extensions.lualine'
+local lualine_ext = nil --require 'softKanagawa.extensions.lualine'
 
 local visual_theme = 'round'
 
@@ -8,13 +8,14 @@ return {
   -- event = 'VimEnter',
   dependencies = {
     'nvim-tree/nvim-web-devicons',
-    require 'softKanagawa.spec',
+    -- require 'softKanagawa.spec',
   },
   priority = 10,
   config = function()
-    local color_theme = lualine_ext.get_main_theme()
-    local tab_theme = lualine_ext.get_tab_theme()
-    require('lualine').setup {
+    local use_defaults = lualine_ext == nil
+    local color_theme = use_defaults == true and {} or lualine_ext.get_main_theme()
+    local tab_theme = use_defaults == true and {} or lualine_ext.get_tab_theme()
+    require('lualine').setup(use_defaults == true and core.get_default_opts(visual_theme) or {
       options = {
         theme = color_theme,
         icons_enabled = true,
@@ -112,10 +113,10 @@ return {
           {
             'tabs',
             mode = 2,
-            tabs_color = tab_theme ~= nil and {
+            tabs_color = use_defaults == true and {} or {
               active = tab_theme.active,
               inactive = tab_theme.inactive,
-            } or {},
+            },
           },
         },
         lualine_x = {
@@ -123,17 +124,17 @@ return {
             function()
               return ' '
             end,
-            color = color_theme.command.c,
+            color = use_defaults == true and {} or color_theme.command.c,
           },
           {
             core.get_day,
-            color = color_theme.command.c,
+            color = use_defaults == true and {} or color_theme.command.c,
           },
         },
         lualine_y = {
           {
             core.get_date,
-            color = color_theme.command.y,
+            color = use_defaults == true and {} or color_theme.command.y,
           },
           -- {
           --   'windows',
@@ -147,7 +148,7 @@ return {
         lualine_z = {
           {
             core.get_time,
-            color = color_theme.command.z,
+            color = use_defaults == true and {} or color_theme.command.z,
           },
         },
       },
@@ -231,7 +232,7 @@ return {
         'mason',
         'quickfix',
       },
-    }
+    })
 
     -- New empty tab named to input from cmd
     vim.keymap.set('n', '<leader>bnn', function()
