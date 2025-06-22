@@ -40,7 +40,7 @@ local defaults = {
 
 local config_fn = function()
   local hooks = require 'ibl.hooks'
-  local indent_line_ext = require 'softKanagawa.extensions.indent_line'
+  local indent_line_ext = nil --require 'softKanagawa.extensions.indent_line'
   local color_table = indent_line_ext ~= nil and indent_line_ext.get_rainbow() or defaults
 
   -- create the highlight groups in the highlight setup hook, so they are reset
