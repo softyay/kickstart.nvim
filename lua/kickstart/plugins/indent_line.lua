@@ -27,7 +27,7 @@ local highlight = {
 }
 
 -- stylua: ignore start
-local defaults = {
+local defaults_bright = {
   RainbowRed =    { fg = '#E06C75' },
   RainbowYellow = { fg = '#E5C07B' },
   RainbowBlue =   { fg = '#61AFEF' },
@@ -35,18 +35,27 @@ local defaults = {
   RainbowOrange = { fg = '#D19A66' },
   RainbowViolet = { fg = '#C678DD' },
   RainbowCyan =   { fg = '#56B6C2' },
--- stylua: ignore end
 }
+local defaults_dim = {
+  RainbowRed =    { fg = '#500210' },
+  RainbowYellow = { fg = '#553713' },
+  RainbowBlue =   { fg = '#113767' },
+  RainbowGreen =  { fg = '#304004' },
+  RainbowOrange = { fg = '#401200' },
+  RainbowViolet = { fg = '#511234' },
+  RainbowCyan =   { fg = '#114141' },
+}
+-- stylua: ignore end
 
 local config_fn = function()
   local hooks = require 'ibl.hooks'
   local indent_line_ext = nil --require 'softKanagawa.extensions.indent_line'
-  local color_table = indent_line_ext ~= nil and indent_line_ext.get_rainbow() or defaults
+  local color_table = indent_line_ext ~= nil and indent_line_ext.get_rainbow() or defaults_dim
 
   -- create the highlight groups in the highlight setup hook, so they are reset
   -- every time the colorscheme changes
   hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-    local colors = color_table ~= nil and color_table or defaults
+    local colors = color_table ~= nil and color_table or defaults_dim
     -- stylua: ignore start
     vim.api.nvim_set_hl(0, 'RainbowRed',    colors.RainbowRed)
     vim.api.nvim_set_hl(0, 'RainbowYellow', colors.RainbowYellow)
