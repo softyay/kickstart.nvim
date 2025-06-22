@@ -7,7 +7,7 @@ M.config_table = {
   config = function()
     require('tiny-inline-diagnostic').setup {
       options = {
-        miltilines = true,
+        multilines = true,
       },
     }
     vim.diagnostic.config {
