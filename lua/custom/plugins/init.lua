@@ -1,11 +1,9 @@
 -- Main File for wrangling custom configs for plugins
-
-local softLualine = require 'custom.configs.softLualine'
-
 local get_spec = function(pluginName)
   local req_path = pluginName .. '.spec'
   return require(req_path)
 end
+
 return {
   -- the colorscheme should be available when starting Neovim
   --[[
@@ -19,7 +17,8 @@ return {
     end,
   },
   --]]
-  get_spec 'softKanagawa',
+  -- get_spec 'softGruvbox',
+  -- get_spec 'softKanagawa',
   get_spec 'softInlineDiagnostic',
   get_spec 'softMiniFile',
   get_spec 'softLualine',

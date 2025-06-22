@@ -101,6 +101,12 @@ local stylua_global_config = vim.fn.fnamemodify(config_dir .. s .. '.stylua.toml
 package.path = config_dir .. s .. 'lua' .. s .. 'custom' .. s .. 'configs' .. s .. '?.lua;' .. package.path
 -- ============================================================================
 
+-- Colorscheme (if none in custom plugins)
+-- ============================================================================
+vim.o.background = 'dark'
+vim.cmd 'colorscheme retrobox'
+-- End Colorscheme ============================================================
+
 -- Vim Options
 -- ============================================================================
 -- Set <space> as the leader key
