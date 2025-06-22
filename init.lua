@@ -90,13 +90,15 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- Operating System Info
 -- ============================================================================
 local os_finder = require 'custom.utils.osFinder'
-local os = os_finder.get_operating_system()
+local _os = os_finder.get_operating_system()
 -- ============================================================================
 
 -- Path info
 -- ============================================================================
 local config_dir = vim.fn.fnamemodify(vim.fn.expand '$MYVIMRC', ':p:h')
-local stylua_global_config = vim.fn.fnamemodify(config_dir .. os.separator .. '.stylua.toml', ':p')
+local s = _os.separator
+local stylua_global_config = vim.fn.fnamemodify(config_dir .. s .. '.stylua.toml', ':p')
+package.path = config_dir .. s .. 'lua' .. s .. 'custom' .. s .. 'configs' .. s .. '?.lua;' .. package.path
 -- ============================================================================
 
 -- Vim Options
@@ -297,6 +299,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Lazy.nvim Config & Plugins
 -- ============================================================================
 -- Configure and install plugins
+
 require('lazy').setup({
 
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically

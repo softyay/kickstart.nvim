@@ -1,18 +1,15 @@
 local M = {}
 
-M.get_tab_colors = function()
-  -- local kana = require('kanagawa.colors').setup({ 'wave' }).palette
-  local kana = require('custom.configs.softKanagawa').default_wave_palette
+M.get_tab_theme = function()
+  local kana = require('kanagawa.colors').setup({ 'wave' }).palette
   return {
     active = { bg = kana.oldWhite, fg = kana.dragonBlack2 },
     inactive = { bg = kana.dragonBlack4, fg = kana.dragonAsh },
   }
 end
 
-M.get_lualine_theme = function(palette)
-  -- local kana = require('kanagawa.colors').setup({ 'wave' }).palette
-  local kana = require('custom.configs.softKanagawa').default_wave_palette
-  -- local kana = palette
+M.get_main_theme = function()
+  local kana = require('kanagawa.colors').setup({ 'wave' }).palette
   return {
     -- NOTE: this style with the ash in the center still looks cool as hell...
     -- just need to figure out how to make the tabline not need to obey it.
@@ -90,22 +87,6 @@ M.get_lualine_theme = function(palette)
       z = { bg = kana.dragonBlack5, fg = kana.dragonAsh, gui = 'italic' },
     },
   }
-end
-
-M.get_indentline_rainbow = function()
-  local kana = require('kanagawa.colors').setup({ 'wave' }).palette
-
-  -- stylua: ignore start
-  return {
-    RainbowRed =    { fg = kana.winterRed     },
-    RainbowYellow = { fg = kana.winterYellow  },
-    RainbowBlue =   { fg = kana.winterBlue    },
-    RainbowGreen =  { fg = kana.winterGreen   },
-    RainbowOrange = { fg = kana.boatYellow1   },
-    RainbowViolet = { fg = kana.sumiInk5      },
-    RainbowCyan =   { fg = kana.waveBlue1     },
-  }
-  -- stylua: ignore end
 end
 
 return M

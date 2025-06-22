@@ -1,0 +1,48 @@
+hit `require`s section in custom/plugins/init.lua
+>>> softKanagawa.lua required
+stack traceback:
+	...e/layla/.config/nvim/lua/custom/configs/softKanagawa.lua:1: in main chunk
+	[C]: in function 'require'
+	/home/layla/.config/nvim/lua/custom/plugins/init.lua:4: in function 'load'
+	...local/share/nvim/lazy/lazy.nvim/lua/lazy/core/plugin.lua:182: in function <...local/share/nvim/lazy/lazy.nvim/lua/lazy/core/plugin.lua:181>
+	[C]: in function 'xpcall'
+	.../.local/share/nvim/lazy/lazy.nvim/lua/lazy/core/util.lua:135: in function 'try'
+	...local/share/nvim/lazy/lazy.nvim/lua/lazy/core/plugin.lua:181: in function 'import'
+	...local/share/nvim/lazy/lazy.nvim/lua/lazy/core/plugin.lua:111: in function 'normalize'
+	...local/share/nvim/lazy/lazy.nvim/lua/lazy/core/plugin.lua:99: in function 'normalize'
+	...local/share/nvim/lazy/lazy.nvim/lua/lazy/core/plugin.lua:99: in function 'normalize'
+	...local/share/nvim/lazy/lazy.nvim/lua/lazy/core/plugin.lua:53: in function 'parse'
+	...local/share/nvim/lazy/lazy.nvim/lua/lazy/core/plugin.lua:331: in function 'load'
+	...local/share/nvim/lazy/lazy.nvim/lua/lazy/core/loader.lua:37: in function 'setup'
+	...layla/.local/share/nvim/lazy/lazy.nvim/lua/lazy/init.lua:102: in function 'setup'
+	/home/layla/.config/nvim/init.lua:309: in main chunk
+config table (from inside softKanagawa):
+{ "rebelot/kanagawa.nvim",
+  config = <function 1>,
+  priority = 999
+}
+softKanagawa.config_table
+(called from inside custom/plugins/init.lua):
+{ "rebelot/kanagawa.nvim",
+  config = <function 1>,
+  priority = 999
+}
+[lazy-debug] Caught: Invalid plugin spec {
+  PRIORITY = 999,
+  TRANSPARENT_BKG = false,
+  config_table = { "rebelot/kanagawa.nvim",
+    config = <function 1>,
+    priority = 999
+  },
+  default_wave_palette = {}
+}
+{
+  ft = "markdown",
+  on_open = <function 1>,
+  title = "lazy.nvim"
+}
+Invalid plugin spec {
+  PRIORITY = 999,
+  TRANSPARENT_BKG = false,
+  config_table = { "rebelot/kanagawa.nvim",
+

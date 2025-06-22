@@ -1,4 +1,4 @@
-local kanagawa_theme_builder = require 'custom.utils.softKanaLua'
+local kanagawa_theme_builder = require 'softKanagawa.extensions.lualine'
 local lualine_theme = {}
 local lualine_separator_style = 'round'
 local standalone_separator_component = function(component_color, num_spaces)
@@ -316,7 +316,7 @@ return {
   event = 'VimEnter',
   dependencies = {
     'nvim-tree/nvim-web-devicons',
-    require 'custom.configs.softKanagawa',
+    require 'softKanagawa.spec',
   },
   config = config_fn,
 }

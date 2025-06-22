@@ -7,10 +7,14 @@ M.config_table = {
   config = function()
     require('tiny-inline-diagnostic').setup {
       options = {
-        multilines = true,
+        miltilines = true,
       },
     }
-    vim.diagnostic.config { virtual_text = false } -- Only if needed in your configuration, if you already have native LSP diagnostics
+    vim.diagnostic.config {
+      -- Only if needed in your configuration,
+      -- if you already have native LSP diagnostics
+      virtual_text = false,
+    }
   end,
 }
 
