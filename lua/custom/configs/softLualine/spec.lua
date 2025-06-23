@@ -11,6 +11,8 @@ return {
     -- require 'softKanagawa.spec',
   },
   priority = 10,
+
+  -- FIX: Please for the love of god ya gotta fix this lay!!!
   config = function()
     local use_defaults = lualine_ext == nil
     local color_theme = use_defaults == true and {} or lualine_ext.get_main_theme()

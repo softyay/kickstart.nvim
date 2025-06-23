@@ -99,12 +99,13 @@ local config_dir = vim.fn.fnamemodify(vim.fn.expand '$MYVIMRC', ':p:h')
 local s = _os.separator
 local stylua_global_config = vim.fn.fnamemodify(config_dir .. s .. '.stylua.toml', ':p')
 package.path = config_dir .. s .. 'lua' .. s .. 'custom' .. s .. 'configs' .. s .. '?.lua;' .. package.path
+-- package.path = config_dir .. s .. 'colors' .. s .. '?.vim;' .. package.path
 -- ============================================================================
 
 -- Colorscheme (if none in custom plugins)
 -- ============================================================================
 vim.o.background = 'dark'
-vim.cmd 'colorscheme retrobox'
+vim.cmd 'colorscheme softRetrobox'
 -- End Colorscheme ============================================================
 
 -- Vim Options
