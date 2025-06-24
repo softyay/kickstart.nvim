@@ -106,6 +106,7 @@ package.path = config_dir .. s .. 'lua' .. s .. 'custom' .. s .. 'configs' .. s 
 -- ============================================================================
 vim.o.background = 'dark'
 vim.cmd 'colorscheme softRetrobox'
+require('softLualine.core').scheme_name = 'softRetrobox'
 -- End Colorscheme ============================================================
 
 -- Vim Options

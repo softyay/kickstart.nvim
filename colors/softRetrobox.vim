@@ -31,6 +31,7 @@ if &background ==# 'dark'
       let g:terminal_color_{i} = g:terminal_ansi_colors[i]
     endfor
   endif
+  "hi Normal guifg=#ebdbb2 guibg=#1c1c1c gui=NONE cterm=NONE
   hi Normal guifg=#ebdbb2 guibg=#1c1c1c gui=NONE cterm=NONE
   hi CursorLineNr guifg=#fabd2f guibg=#1c1c1c gui=bold cterm=bold
   hi FoldColumn guifg=#928374 guibg=#1c1c1c gui=NONE cterm=NONE
@@ -95,11 +96,11 @@ if &background ==# 'dark'
   hi Error guifg=#fb4934 guibg=#1c1c1c gui=bold,reverse cterm=bold,reverse
   hi Exception guifg=#fb4934 guibg=NONE gui=NONE cterm=NONE
   hi Float guifg=#d3869b guibg=NONE gui=NONE cterm=NONE
-  hi Function guifg=#b8bb26 guibg=NONE gui=bold cterm=bold
+  hi Function guifg=#b8bb26 guibg=NONE gui=NONE cterm=NONE
   hi Identifier guifg=#83a598 guibg=NONE gui=NONE cterm=NONE
   hi Ignore guifg=fg guibg=NONE gui=NONE cterm=NONE
   hi Include guifg=#8ec07c guibg=NONE gui=NONE cterm=NONE
-  hi Keyword guifg=#fb4934 guibg=NONE gui=NONE cterm=NONE
+  hi Keyword guifg=#fb4934 guibg=NONE gui=italic cterm=NONE
   hi Label guifg=#fb4934 guibg=NONE gui=NONE cterm=NONE
   hi Macro guifg=#8ec07c guibg=NONE gui=NONE cterm=NONE
   hi Number guifg=#d3869b guibg=NONE gui=NONE cterm=NONE
