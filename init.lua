@@ -246,6 +246,20 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- ============================================================================
 --  See `:help lua-guide-autocommands`
 
+-- NOTE: Layla added
+--
+-- Configure tabs for bash scripts
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'sh',
+  callback = function()
+    vim.cmd 'setlocal tabstop=4'
+    vim.cmd 'setlocal shiftwidth=4'
+    vim.cmd 'setlocal noexpandtab'
+  end,
+})
+
+-- NOTE: Layla added
+--
 -- Save folds
 vim.api.nvim_create_autocmd('BufWritePost', {
   desc = 'Save folds when writing to (saving) a file',
@@ -253,6 +267,8 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   command = 'mkview',
 })
 
+-- NOTE: Layla added
+--
 -- Load folds
 vim.api.nvim_create_autocmd('BufReadPost', {
   desc = 'Load folds when reading (opening) a file',
