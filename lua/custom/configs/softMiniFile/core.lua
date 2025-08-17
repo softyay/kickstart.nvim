@@ -33,10 +33,17 @@ M.passes_all_filters = function(entry)
 
     if not passes_current_filter(entry) then
       if current_filter.show_debug_messages then
-        local prompt = "Entry '" .. entry.name .. "' was filtered by filter " .. i .. ' (' .. M.filters[i].name .. ') \n'
+        local prompt = "Entry '"
+          .. entry.name
+          .. "' was filtered by filter "
+          .. i
+          .. ' ('
+          .. M.filters[i].name
+          .. ') \n'
         prompt = prompt .. 'Enter -> continue\n'
         prompt = prompt .. "'off' -> disable debug mode for this filter\n"
-        prompt = prompt .. "'all off' -> disable debug mode off for all filters\n"
+        prompt = prompt
+          .. "'all off' -> disable debug mode off for all filters\n"
         local inp = vim.fn.input(prompt)
         if inp == 'off' then
           current_filter.show_debug_messages = false
@@ -108,6 +115,18 @@ M.config_table = {
         width_preview = 70,
       },
     }
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesExplorerOpen',
+      callback = function()
+        vim.b.completion = false
+      end,
+    })
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesExplorerClose',
+      callback = function()
+        vim.b.completion = true
+      end,
+    })
 
     vim.keymap.set('n', '<leader>ec', function()
       minifiles.open(nil, false)
