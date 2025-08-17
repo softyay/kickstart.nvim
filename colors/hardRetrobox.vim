@@ -7,7 +7,7 @@
 
 " hi clear
 source $VIMRUNTIME/colors/vim.lua " Nvim: revert to Vim default color scheme
-let g:colors_name = 'softRetrobox'
+let g:colors_name = 'hardRetrobox'
 
 let s:t_Co = &t_Co
 
@@ -34,31 +34,28 @@ if &background ==# 'dark'
     endfor
   endif
   "hi Normal guifg=#ebdbb2 guibg=#1c1c1c gui=NONE cterm=NONE
-  hi Normal guifg=#ebdbb2 guibg=#171717 gui=NONE cterm=NONE
+  hi Normal guifg=#faba88 guibg=#000000 gui=NONE cterm=NONE
   hi CursorLineNr guifg=#fabd2f guibg=#1c1c1c gui=bold cterm=bold
-  hi FoldColumn guifg=#928374 guibg=NONE gui=NONE cterm=NONE
+  hi FoldColumn guifg=#928374 guibg=#1c1c1c gui=NONE cterm=NONE
   hi SignColumn guifg=#928374 guibg=#1c1c1c gui=NONE cterm=NONE
-  hi VertSplit guifg=#303030 guibg=NONE gui=NONE cterm=NONE
+  hi VertSplit guifg=#303030 guibg=#1c1c1c gui=NONE cterm=NONE
   hi ColorColumn guifg=NONE guibg=#000000 gui=NONE cterm=NONE
   hi Comment guifg=#928374 guibg=NONE gui=NONE cterm=NONE
   hi CursorLine guifg=NONE guibg=#303030 gui=NONE cterm=NONE
-  hi Error guifg=#fb4934 guibg=NONE gui=bold,reverse cterm=bold,reverse
-  hi ErrorMsg guifg=NONE guibg=#fb4934 gui=bold cterm=bold
+  hi Error guifg=#fb4934 guibg=#1c1c1c gui=bold,reverse cterm=bold,reverse
+  hi ErrorMsg guifg=#1c1c1c guibg=#fb4934 gui=bold cterm=bold
   hi Folded guifg=#928374 guibg=#121212 gui=NONE cterm=NONE
-  hi LineNr guifg=#7c6f64 guibg=#1c1c1c gui=NONE cterm=NONE
+  hi LineNr guifg=#7c6f64 guibg=NONE gui=NONE cterm=NONE
   hi MatchParen guifg=NONE guibg=#504945 gui=bold,underline cterm=bold,underline
   hi NonText guifg=#504945 guibg=NONE gui=NONE cterm=NONE
-  "hi Pmenu guifg=#faba88 guibg=#111111 gui=NONE cterm=NONE
+  hi Pmenu guifg=#ebdbb2 guibg=#1c1c1c gui=NONE cterm=NONE
   "hi Pmenu guifg=#ac4e07 guibg=#202020 gui=NONE cterm=NONE
   "hi Pmenu guifg=#ebdbb2 guibg=#3c3836 gui=NONE cterm=NONE
-  hi Pmenu guifg=#faba88 guibg=#1c1c1c gui=NONE cterm=NONE
   hi PmenuSbar guifg=NONE guibg=#3c3836 gui=NONE cterm=NONE
-  hi PmenuSel guifg=#3c3836 guibg=#537568 gui=bold cterm=bold
+  hi PmenuSel guifg=#3c3836 guibg=#739588 gui=bold cterm=bold
   hi PmenuThumb guifg=NONE guibg=#7c6f64 gui=NONE cterm=NONE
-  hi PmenuKind guifg=#fb4934 guibg=NONE gui=NONE cterm=NONE
-  "hi PmenuKind guifg=#fb4934 guibg=#3c3836 gui=NONE cterm=NONE
-  hi PmenuKindSel guifg=#fb4934 guibg=NONE gui=NONE cterm=NONE
-  "hi PmenuKindSel guifg=#fb4934 guibg=#83a598 gui=NONE cterm=NONE
+  hi PmenuKind guifg=#fb4934 guibg=#3c3836 gui=NONE cterm=NONE
+  hi PmenuKindSel guifg=#fb4934 guibg=#83a598 gui=NONE cterm=NONE
   hi PmenuExtra guifg=#a89984 guibg=#3c3836 gui=NONE cterm=NONE
   hi PmenuExtraSel guifg=#303030 guibg=#83a598 gui=NONE cterm=NONE
   hi PmenuMatch guifg=#b16286 guibg=#3c3836 gui=NONE cterm=NONE
@@ -71,22 +68,22 @@ if &background ==# 'dark'
   hi TabLineSel guifg=#fbf1c7 guibg=#1c1c1c gui=bold cterm=bold
   hi ToolbarButton guifg=#fbf1c7 guibg=#303030 gui=bold cterm=bold
   hi ToolbarLine guifg=NONE guibg=NONE gui=NONE ctermfg=NONE ctermbg=NONE cterm=NONE
-  hi Visual guifg=#1c1c1c guibg=#537568 gui=NONE cterm=NONE
+  hi Visual guifg=#1c1c1c guibg=#739588 gui=NONE cterm=NONE
   hi WildMenu guifg=#83a598 guibg=#504945 gui=bold cterm=bold
   hi EndOfBuffer guifg=#504945 guibg=NONE gui=NONE cterm=NONE
   hi Conceal guifg=#504945 guibg=NONE gui=NONE cterm=NONE
   hi Cursor guifg=#1c1c1c guibg=#fbf1c7 gui=NONE cterm=NONE
-  hi DiffAdd guifg=#b8bb26 guibg=NONE gui=reverse cterm=reverse
-  hi DiffChange guifg=#8ec07c guibg=NONE gui=reverse cterm=reverse
-  hi DiffDelete guifg=#fb4934 guibg=NONE gui=reverse cterm=reverse
-  hi DiffText guifg=#fabd2f guibg=NONE gui=reverse cterm=reverse
+  hi DiffAdd guifg=#b8bb26 guibg=#1c1c1c gui=reverse cterm=reverse
+  hi DiffChange guifg=#8ec07c guibg=#1c1c1c gui=reverse cterm=reverse
+  hi DiffDelete guifg=#fb4934 guibg=#1c1c1c gui=reverse cterm=reverse
+  hi DiffText guifg=#fabd2f guibg=#1c1c1c gui=reverse cterm=reverse
   hi Directory guifg=#b8bb26 guibg=NONE gui=bold cterm=bold
-  hi IncSearch guifg=#fe8019 guibg=NONE gui=reverse cterm=reverse
+  hi IncSearch guifg=#fe8019 guibg=#1c1c1c gui=reverse cterm=reverse
   hi ModeMsg guifg=#fabd2f guibg=NONE gui=bold cterm=bold
   hi MoreMsg guifg=#fabd2f guibg=NONE gui=bold cterm=bold
   hi Question guifg=#fe8019 guibg=NONE gui=bold cterm=bold
-  hi Search guifg=#98971a guibg=NONE gui=reverse cterm=reverse
-  hi QuickFixLine guifg=#8ec07c guibg=NONE gui=reverse cterm=reverse
+  hi Search guifg=#98971a guibg=#1c1c1c gui=reverse cterm=reverse
+  hi QuickFixLine guifg=#8ec07c guibg=#1c1c1c gui=reverse cterm=reverse
   hi SpellBad guifg=#fb4934 guibg=NONE guisp=#fb4934 gui=undercurl cterm=underline
   hi SpellCap guifg=#83a598 guibg=NONE guisp=#83a598 gui=undercurl cterm=underline
   hi SpellLocal guifg=#8ec07c guibg=NONE guisp=#8ec07c gui=undercurl cterm=underline
