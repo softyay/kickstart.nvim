@@ -19,6 +19,8 @@ return {
   --]]
   -- get_spec 'softGruvbox',
   -- get_spec 'softKanagawa',
+  get_spec 'softAlpha',
+  get_spec 'softPossession',
   get_spec 'softInlineDiagnostic',
   get_spec 'softMiniFile',
   get_spec 'softLualine',

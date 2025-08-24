@@ -149,6 +149,10 @@ vim.g.have_nerd_font = true
 -- Set views to only track folds
 vim.opt.viewoptions = { 'folds' }
 
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+
 -- Make line numbers default
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -328,6 +332,28 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.cmd 'setlocal noexpandtab'
   end,
 })
+-- NOTE: Layla added
+-- WARN:
+-- Uncomment if tabs keep acting up
+--
+---[[
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'cs',
+  callback = function()
+    vim.cmd 'setlocal tabstop=4'
+    vim.cmd 'setlocal shiftwidth=4'
+    vim.cmd 'setlocal expandtab'
+  end,
+})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'lua',
+  callback = function()
+    vim.cmd 'setlocal tabstop=2'
+    vim.cmd 'setlocal shiftwidth=2'
+    vim.cmd 'setlocal expandtab'
+  end,
+})
+--]]
 
 -- NOTE: Layla added
 --
