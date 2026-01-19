@@ -57,6 +57,20 @@ return {
       desc = 'Debug: Step Out',
     },
     {
+      '<F4>',
+      function()
+        require('dap').close()
+      end,
+      desc = 'Debug: CLOSE',
+    },
+    {
+      '<F6>',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Debug: TERM',
+    },
+    {
       '<leader>dbs',
       function()
         require('dap').toggle_breakpoint()
